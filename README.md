@@ -1,10 +1,11 @@
-# N-Queens problem in Haskell
+# Countdown (game show) in Haskell
 
-Here is a classic problem. The N-Queens problem consists in
-placing N queens on a board without interfering. Two queens
-must be on different rows, columns and diagonals.
+"Countdown" is a game where the players have to take numbers and
+operations ($+$, $-$, $*$, $/$) and find a way to arrive to a given result.
 
-So here is my own version...
+For instance, with 25, 50, 75, 100, 3 and 6 can you compute 952?
 
-- the source code in Literate Haskell: [nqueens.lhs](nqueens.lhs)
-- the document rendered in Markdown: [nqueens.md](nqueens.md)
+Well this one is a bit difficult to find. Let's see if Haskell can find a solution.
+
+- the source code in Literate Haskell: [countdown.lhs](countdown.lhs)
+- the document rendered in Markdown: [countdown.md](countdown.md)
