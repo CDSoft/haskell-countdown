@@ -44,12 +44,13 @@ module Main where
 import Data.List
 import System.Environment
 import Control.Monad
+import Text.Read (readMaybe)
 
-data Expr = Number Integer
-          | Add Expr Expr Integer
-          | Sub Expr Expr Integer
-          | Mul Expr Expr Integer
-          | Div Expr Expr Integer
+data Expr = Number !Integer
+          | Add !Expr !Expr !Integer
+          | Sub !Expr !Expr !Integer
+          | Mul !Expr !Expr !Integer
+          | Div !Expr !Expr !Integer
 
 \end{code}
 
@@ -185,8 +186,12 @@ The last one is the best solution.
 
 main = do
     args <- getArgs
-    let n = read $ last args
-    let ns = map read $ init args
+    let (n:ns) = case args of
+            [] -> error "usage: countdown result numbers..."
+            _ -> map read' args
+                where read' s = case readMaybe s of
+                                    Just x -> x
+                                    Nothing -> error $ "« "++s++" » is not a number"
     let es = concat $ steps' [map Number ns]
     putStrLn $ show n ++ " with " ++ show ns ++ " ?"
     forM_ (solve n (-n) es) printOps
@@ -199,17 +204,17 @@ Examples
 1. How to find 102 with 25, 50, 75, 100, 3, 6 ? easy!
 
 ~~~~~
-$ runhaskell countdown.lhs 25 50 75 100 3 6 102
+$ runhaskell countdown.lhs 102 25 50 75 100 3 6
 
-@(script.sh ".build/countdown 25 50 75 100 3 6 102")
+@(script.sh ".build/countdown 102 25 50 75 100 3 6")
 ~~~~~
 
 2. How to find 952 with 25, 50, 75, 100, 3, 6 ???
 
 ~~~~~
-$ runhaskell countdown.lhs 25 50 75 100 3 6 952
+$ runhaskell countdown.lhs 952 25 50 75 100 3 6
 
-@(script.sh ".build/countdown 25 50 75 100 3 6 952")
+@(script.sh ".build/countdown 952 25 50 75 100 3 6")
 ~~~~~
 
 Source
